@@ -109,13 +109,13 @@ class MainForm(Ui_Form):
 		if not self.updateBlock:
 			if self.c_train.checkState():
 				out = self.systemSim(value, self.inp)
-				self.bpnc.sample(self.oup[-delay - iLen:-delay]+self.inp[-delay - oLen:-delay], out, value)
+				self.bpnc.sample(self.oup[-delay - oLen:-delay]+self.inp[-delay - iLen:-delay], out, value)
 				self.dscnt +=1
 				self.l_stat.setText("Added {} samples in total".format(self.dscnt))
 				print "input={}, \toutput={}".format(value, out)
 			else:
 #				out = (self.pid.regulate(value - self.oup[-self.kdoublenuminput_2.value()]))
-				cout = self.bpnc.act(self.inp[-delay - iLen:-delay]+self.oup[-delay - oLen:-delay], value)[0]
+				cout = self.bpnc.act(self.inp[-delay - oLen:-delay]+self.oup[-delay - iLen:-delay], value)[0]
 				out = self.systemSim(cout, self.cop)
 				print "input={}, \ttcontroller out={}, \toutput={}".format(value, cout, out)
 				self.cop = self.cop[1:]+ [cout]
